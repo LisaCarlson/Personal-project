@@ -10,8 +10,8 @@ var notesCollection = db.get('notes');
 
 
 router.get('/notes', function(req, res) {
-    notesCollection.findOne({}, function (err, docs) {
-      res.json(docs);
+  notesCollection.findOne({}, function (err, docs) {
+    res.json(docs);
   });
 });
 
@@ -25,12 +25,8 @@ router.post('/newnotes', function(req, res) {
 
 router.put('/notes/:id', function(req, res) {
     var notesID = req.params.id;
-    console.log(req.body);
-    console.log(notesID);
-    console.log(req.body.notes);
-    notesCollection.updateById(notesID, {'notes': req.body.notes}, function(err) {
-        
-        res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
+    notesCollection.updateById(notesID, {'notes': req.body.notes}, function(err) { 
+      res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
     });
 });
 

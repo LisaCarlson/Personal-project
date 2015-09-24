@@ -1,5 +1,5 @@
 body {
-  font-size: 18px;
+  font-size: 16px;
   background-color: #fff2f4;
   font-family: 'Muli', sans-serif;
 }
@@ -38,9 +38,9 @@ h3 {
   color: #ff96ca;
 }
 
-td {
+/*td {
   width: 30px;
-}
+}*/
 
 /* App wide classes */
 
@@ -60,16 +60,16 @@ textarea#notes {
 }
 
 .bfh-timepicker {
-  width: 120px;
+  width: 130px;
 }
 
 .table > tbody > tr > td {
   padding: 4px;
 }
 
-.diaper {
+/*.diaper {
   margin-left: 10px;
-}
+}*/
 
 #wet-diaper, #dirty-diaper {
   margin-left: 20px;

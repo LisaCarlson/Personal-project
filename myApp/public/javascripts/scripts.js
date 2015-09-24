@@ -6,42 +6,36 @@ $(document).ready(function() {
   dateString += newDate.getFullYear();
   console.log(dateString);
 
-
-
-
   populateFeedings();
   populateSleeps();
   populateNotes();
   populateDiapers();
 
-  function initTimePickers() {
-    $('.bfh-timepicker').each(function(){
-      var time = $(this).data('time');
-      if(!time){
-        time = '';
-      }
-      $(this).bfhtimepicker({time:time, placeholder:'HH:MM', mode:'12h'});
-      $(this).unbind('hide.bfhtimepicker');
-      $(this).on('hide.bfhtimepicker', function(e){
-        var type = $(this).data('type');
-        if(type == 'sleep'){
-          saveSleep(e); 
-        }
-        else{
-          saveFeeding(e); 
-        } 
-      });
-    }); 
-    $('.feeding-number').each(function() {
-      $(this).bfhnumber();
-      $(this).unbind('change');
-      $(this).on('change', function(e){
-        saveFeeding(e);
-      });
+  function populateFeedings() {
+    $.getJSON('/users/feedings', function(data) {
+      renderFeedings(data); 
     });
+  };
 
+  function populateDiapers() {
+    $.getJSON('/users/diapers', function(data) {
+      renderDiapers(data); 
+    });
+  };
+
+  
+  function populateSleeps() {
+    $.getJSON('/users/sleeps', function(data) {
+      renderSleeps(data); 
+    });
+  };
+ 
+  function populateNotes() {
+    $.getJSON('/users/notes', function(data) {
+     renderNotes(data);
+    });
   }
-
+  
   function renderFeedings(collection) {
     var tbody = $('#feedings table tbody');
     tbody.html('');
@@ -64,22 +58,9 @@ $(document).ready(function() {
     editRow += '<td><input id="new-minutes" type="text" class="form-control bfh-number minutes feeding-number" data-type="feeding"></td>'
     editRow += '<td><input id="new-ounces" type="text" class="form-control bfh-number ounces feeding-number" data-type="feeding"></td>';
     editRow += '<td></td>';
-    // editRow += '<td><a href="#" class="delete linkdeletefeeding btn btn-default" rel="' + this._id + '"><i class="glyphicon glyphicon-trash"></i></a></td>';
     editRow += '</tr>';
     tbody.append(editRow);
     initTimePickers();
-  };
-
-  function populateFeedings() {
-    $.getJSON('/users/feedings', function(data) {
-      renderFeedings(data); 
-    });
-  };
-
-  function populateDiapers() {
-    $.getJSON('/users/diapers', function(data) {
-      renderDiapers(data); 
-    });
   };
 
   function renderSleeps(collection) {
@@ -103,18 +84,25 @@ $(document).ready(function() {
     editRow += '<td><div id="new-awake" class="awake bfh-timepicker" data-type="sleep" data-mode="12h"></div></td>';
     editRow += '<td class="duration"></td>';
     editRow += '<td></td>';
-    // editRow += '<td><button type="reset" class="delete linkdeletesleep btn btn-default"><i class="glyphicon glyphicon-trash"></i></button></td>';
-    // editRow += '<td><a href="#" class="delete linkdeletesleep btn btn-default" rel="' + this._id + '"><i class="glyphicon glyphicon-trash"></i></a></td>';
     editRow += '</tr>';
     tbody.append(editRow);
     initTimePickers();
   }
 
-  function populateSleeps() {
-    $.getJSON('/users/sleeps', function(data) {
-      renderSleeps(data); 
-    });
-  };
+  function renderDiapers(data) {
+    var wetDiaper = $('#wet-diaper'); 
+    var dirtyDiaper = $('#dirty-diaper'); 
+    if(data[0]) {
+      wetDiaper.html(data[0].wet); 
+      dirtyDiaper.html(data[0].dirty);
+      $('.diaper').attr('data-id', data[0]._id);
+    } 
+    else { 
+      wetDiaper.html('0');   
+      dirtyDiaper.html('0');
+    }
+  }
+
 
   function renderNotes(data) {
     var textarea = $('#notes'); 
@@ -122,6 +110,34 @@ $(document).ready(function() {
       textarea.html(data.notes);
       textarea.attr('data-id', data._id);
     }
+  }
+
+  function initTimePickers() {
+    $('.bfh-timepicker').each(function(){
+      var time = $(this).data('time');
+      if(!time){
+        time = '';
+      }
+      $(this).bfhtimepicker({time:time, placeholder:'HH:MM', mode:'12h'});
+      $(this).unbind('hide.bfhtimepicker');
+      $(this).on('hide.bfhtimepicker', function(event){
+        var type = $(this).data('type');
+        if(type == 'sleep'){
+          saveSleep(event); 
+        }
+        else{
+          saveFeeding(event); 
+        } 
+      });
+    }); 
+    $('.feeding-number').each(function() {
+      $(this).bfhnumber();
+      $(this).unbind('change');
+      $(this).on('change', function(event){
+        saveFeeding(event);
+      });
+    });
+
   }
 
   function updateNotes() {
@@ -148,11 +164,7 @@ $(document).ready(function() {
     });
   }
 
-  function populateNotes() {
-    $.getJSON('/users/notes', function(data) {
-     renderNotes(data);
-    });
-  }
+
 
   function parseMinutes(string) {
     var splitString1 = string.split(' ');
@@ -221,25 +233,10 @@ $(document).ready(function() {
     }
   }
   
-  function renderDiapers(data) {
-    var wetDiaper = $('#wet-diaper'); 
-    var dirtyDiaper = $('#dirty-diaper'); 
-    if(data[0]) {
-      wetDiaper.html(data[0].wet); 
-      dirtyDiaper.html(data[0].dirty);
-      $('.diaper').attr('data-id', data[0]._id);
-    } 
-    else { 
-      wetDiaper.html('0');   
-      dirtyDiaper.html('0');
-    }
-  }
-
-
-  function saveFeeding(e) {
-    var el = $(e.currentTarget);
-    var row = el.closest('tr.feeding');
-    var rowId = el.attr('data-id');
+  function saveFeeding(event) {
+    var elem = $(event.currentTarget);
+    var row = elem.closest('tr.feeding');
+    var rowId = elem.attr('data-id');
     var time = row.find('.time input').val();
     var minutes = row.find('input.minutes').val();
     var ounces = row.find('input.ounces').val();
@@ -283,10 +280,10 @@ $(document).ready(function() {
         });
   };
 
-  function saveSleep(e) {
-    var el = $(e.currentTarget);
-    var sleepRow = el.closest('tr.sleep');
-    var sleepId = el.attr('data-id');
+  function saveSleep(event) {
+    var elem = $(event.currentTarget);
+    var sleepRow = elem.closest('tr.sleep');
+    var sleepId = elem.attr('data-id');
     var asleep = sleepRow.find('.asleep input').val();
     var awake = sleepRow.find('.awake input').val();
     var sleep = {'asleep': asleep, 'awake': awake};
@@ -316,8 +313,6 @@ $(document).ready(function() {
     event.preventDefault();
     var elem = $(event.currentTarget);
     var sleepId = elem.attr('rel');
-    console.log(elem);
-    console.log(sleepId); 
       $.ajax({
         type: 'DELETE',
         url: '/users/sleeps/' + sleepId
@@ -332,22 +327,18 @@ $(document).ready(function() {
   };
 
   //delete feedings
-  // $('#feedings table tbody').on('click', 'td a.linkdeletefeeding', deleteFeeding);
   $('#feedings table tbody').on('click', 'td a.linkdeletefeeding', function(){
     var feedId= $(this)[0].rel;
     $('#confirm-feed-delete').attr('rel', feedId);
     $('#deleteFeedModal').modal('show');
   });
+  //delete sleep
   $('#sleep table tbody').on('click', 'td a.linkdeletesleep', function(){
     var sleepId= $(this)[0].rel;
     $('#confirm-sleep-delete').attr('rel', sleepId);
     $('#deleteSleepModal').modal('show');
-  });
-
-  //delete sleep
-  // $('#sleep table tbody').on('click','td a.linkdeletesleep', deleteSleep);
+  }); 
   //update notes
-  // $('#notes-btn').on('click', updateNotes);
   $('#notes').on('change', updateNotes)
   //update diapers
   $('.diaper').on('click', function(event){
@@ -371,6 +362,7 @@ $(document).ready(function() {
     if($( this ).hasClass( "dirty-minus" )) {
       numberDirty--;
     }
+    
     checkDirtyDiapers(numberDirty);
     checkWetDiapers(numberWet);
 
