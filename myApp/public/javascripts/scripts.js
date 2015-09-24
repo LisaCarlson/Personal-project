@@ -1,10 +1,18 @@
 $(document).ready(function() {
-  
+  var dateString = "Today's date is: ";
+  var newDate = new Date();
+  dateString += (newDate.getMonth() + 1) + "-";
+  dateString += newDate.getDate() + "-";
+  dateString += newDate.getFullYear();
+  console.log(dateString);
+
+
+
+
   populateFeedings();
   populateSleeps();
   populateNotes();
   populateDiapers();
-
 
   function initTimePickers() {
     $('.bfh-timepicker').each(function(){
@@ -46,7 +54,7 @@ $(document).ready(function() {
       tableContent += '<td><div id="update-time" class="bfh-timepicker time" data-type="feeding" data-id="' + feeding._id + '" data-time="'+ time +'"></div></td>';
       tableContent += '<td><input type="text" class="form-control bfh-number minutes feeding-number" data-type="feeding" data-id="' + feeding._id + '" value="'+ minutes +'"></td>';
       tableContent += '<td><input type="text" class="form-control bfh-number ounces feeding-number" data-type="feeding" data-id="' + feeding._id + '" value="'+ ounces +'"></td>';
-      tableContent += '<td><a href="#" class="delete linkdeletefeeding btn btn-default data-toggle="confirmation" rel="' + feeding._id + '"><i class="glyphicon glyphicon-trash"></i></a></td>';
+      tableContent += '<td><a href="#" class="delete linkdeletefeeding btn btn-default data-toggle="modal" data-target="#deleteFeedModal" rel="' + feeding._id + '"><i class="glyphicon glyphicon-trash"></i></a></td>';
       tableContent += '</tr>';
       tbody.append(tableContent);
     }
@@ -85,7 +93,7 @@ $(document).ready(function() {
       tableContent += '<td><div class="asleep bfh-timepicker" data-type="sleep" data-mode="12h" data-id="' + sleep._id + '" data-time="' + asleep + '"></div></td>';
       tableContent += '<td><div class="awake bfh-timepicker" data-type="sleep" data-mode="12h" data-id="' + sleep._id + '" data-time="' + awake + '"></div></td>';
       tableContent += '<td class="duration">' + calcDuration(asleep, awake) + '</td>';
-      tableContent += '<td><a href="#" class="delete linkdeletesleep btn btn-default" rel="' + sleep._id + '"><i class="glyphicon glyphicon-trash"></i></a></td>';
+      tableContent += '<td><a href="#" class="delete linkdeletesleep btn btn-default data-toggle="modal" data-target="#deleteSleepModal" rel="' + sleep._id + '"><i class="glyphicon glyphicon-trash"></i></a></td>';
       tableContent += '</tr>';
       tbody.append(tableContent);
     }
@@ -260,11 +268,11 @@ $(document).ready(function() {
 
   function deleteFeeding(event) {
       event.preventDefault();
-      var confirmation = confirm('Are you sure you want to delete this feeding?');
-      if (confirmation === true) {
+      var elem = $(event.currentTarget);
+      var feedId = elem.attr('rel');
         $.ajax({
           type: 'DELETE',
-          url: '/users/feedings/' + $(this).attr('rel')
+          url: '/users/feedings/' + feedId
         }).done(function( response ) {
           if (response.msg === '') {
           }
@@ -273,10 +281,6 @@ $(document).ready(function() {
           }
           populateFeedings();
         });
-      }
-      else {
-        return false;
-      }
   };
 
   function saveSleep(e) {
@@ -308,13 +312,15 @@ $(document).ready(function() {
     });
   };
 
-  function deleteSleep(e) {
-    e.preventDefault();
-    var confirmation = confirm('Are you sure you want to delete this sleep?');
-    if (confirmation === true) {
+  function deleteSleep(event) {
+    event.preventDefault();
+    var elem = $(event.currentTarget);
+    var sleepId = elem.attr('rel');
+    console.log(elem);
+    console.log(sleepId); 
       $.ajax({
         type: 'DELETE',
-        url: '/users/sleeps/' + $(this).attr('rel')
+        url: '/users/sleeps/' + sleepId
       }).done(function( response ) {
         if (response.msg === '') {
         }
@@ -323,20 +329,28 @@ $(document).ready(function() {
         }
         populateSleeps();
       });
-    }
-    else {
-      return false;
-    }
   };
 
   //delete feedings
-  $('#feedings table tbody').on('click', 'td a.linkdeletefeeding', deleteFeeding);
+  // $('#feedings table tbody').on('click', 'td a.linkdeletefeeding', deleteFeeding);
+  $('#feedings table tbody').on('click', 'td a.linkdeletefeeding', function(){
+    var feedId= $(this)[0].rel;
+    $('#confirm-feed-delete').attr('rel', feedId);
+    $('#deleteFeedModal').modal('show');
+  });
+  $('#sleep table tbody').on('click', 'td a.linkdeletesleep', function(){
+    var sleepId= $(this)[0].rel;
+    $('#confirm-sleep-delete').attr('rel', sleepId);
+    $('#deleteSleepModal').modal('show');
+  });
+
   //delete sleep
-  $('#sleep table tbody').on('click','td a.linkdeletesleep', deleteSleep);
+  // $('#sleep table tbody').on('click','td a.linkdeletesleep', deleteSleep);
   //update notes
-  $('#notes-btn').on('click', updateNotes);
+  // $('#notes-btn').on('click', updateNotes);
+  $('#notes').on('change', updateNotes)
   //update diapers
-  $('.diaper').on("click", function(event){
+  $('.diaper').on('click', function(event){
 
     event.preventDefault();
     var elem = $(event.currentTarget);
@@ -384,8 +398,14 @@ $(document).ready(function() {
 
   });
 
-
-
+$('#confirm-feed-delete').on('click', function(event) {
+    deleteFeeding(event);
+    $('#deleteFeedModal').modal('hide');       
+  });
+$('#confirm-sleep-delete').on('click', function(event) {
+    deleteSleep(event);
+    $('#deleteSleepModal').modal('hide');       
+  });
 
 });
 

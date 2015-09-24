@@ -1,15 +1,16 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 18px;
   background-color: #fff2f4;
+  font-family: 'Muli', sans-serif;
 }
 
 a {
   color: #ff96ca;
 }
 
-/*input {
-  width: 100px;
-}*/
+h3 {
+  font-weight: bold;
+}
 
 .container {
   background-color: #fff;
@@ -29,6 +30,7 @@ a {
 #logo {
   height: 70px; 
   width: 70px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-default .navbar-nav > li > a{
@@ -51,12 +53,10 @@ td {
   width:18px;
 }
 
-/*input.form-control {display: block; padding: 0; margin: 0; border: 0; width: 100%;}
-td {margin: 0; padding: 0;}*/
-
 textarea#notes {
   resize: none;
   height: 100px;
+  margin-bottom: 20px;
 }
 
 .bfh-timepicker {
@@ -88,8 +88,41 @@ textarea#notes {
 .delete:focus {
   background-color: #e0e0e0;
   background-position: 0 -15px;
-  color: red;
+  color: #ff96ca;;
 }
 .delete {
   width: 100%;
 }
+
+.input-group .form-control:last-child {
+  background-color: #fff;
+}
+
+.table > tbody > tr > td.duration {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.glyphicon-baby-formula, .baby {
+  margin-left: 10px;
+}
+
+#feedings {
+  padding-right: 10px;
+}
+#diapers {
+  padding: 0px;
+}
+
+#sleeps {
+  padding-left: 10px;
+}
+
+.modal-header {
+  background-color: #d9534f;
+  color: white;
+  font-weight: bold;
+}
+
+
+
