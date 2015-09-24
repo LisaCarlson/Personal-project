@@ -1,0 +1,95 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #fff2f4;
+}
+
+a {
+  color: #ff96ca;
+}
+
+/*input {
+  width: 100px;
+}*/
+
+.container {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-header {
+  padding-bottom: 50px;
+}
+
+
+.navbar .navbar-nav{
+  margin-top:25px;
+}
+
+#logo {
+  height: 70px; 
+  width: 70px;
+}
+
+.navbar-default .navbar-nav > li > a{
+  font-size: 20px;
+  color: #ff96ca;
+}
+
+td {
+  width: 30px;
+}
+
+/* App wide classes */
+
+.padded{
+  padding:10px 20px;
+}
+
+.baby, .pin {
+  height: 20px;
+  width:18px;
+}
+
+/*input.form-control {display: block; padding: 0; margin: 0; border: 0; width: 100%;}
+td {margin: 0; padding: 0;}*/
+
+textarea#notes {
+  resize: none;
+  height: 100px;
+}
+
+.bfh-timepicker {
+  width: 120px;
+}
+
+.table > tbody > tr > td {
+  padding: 4px;
+}
+
+.diaper {
+  margin-left: 10px;
+}
+
+#wet-diaper, #dirty-diaper {
+  margin-left: 20px;
+  font-size: 20px;
+}
+
+.asleep.bfh-timepicker {
+  width: 130px;
+}
+
+.awake.bfh-timepicker {
+  width: 130px;
+}
+
+.delete:hover,
+.delete:focus {
+  background-color: #e0e0e0;
+  background-position: 0 -15px;
+  color: red;
+}
+.delete {
+  width: 100%;
+}

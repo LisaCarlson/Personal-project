@@ -1,0 +1,90 @@
+extends layout
+
+block content
+  div(class="navbar navbar-default navbar-static-top")
+    .container-fluid
+      .navbar-header
+        a(class="navbar-brand" href="#") 
+          img(id="logo" src="/images/mom_baby.jpg") 
+        button(type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse")
+          span(class="sr-only") Toggle navigation
+          span(class="icon-bar")
+          span(class="icon-bar")
+          span(class="icon-bar") 
+      ul(class="nav navbar-nav navbar-right collapse navbar-collapse")
+        li 
+          a(href="#") Growth Chart
+        li
+          a(href="#") Illness Record
+        li
+          a(href="#") Summary
+  .container
+    .row
+      .col-md-5
+        h3 Feeding Chart
+        form(id="feedings")
+          table(class="table table-striped table-bordered")
+            thead 
+              th Time
+              th Minutes (Breastfeeding)
+              th Ounces (bottle)
+                i(class='glyphicon glyphicon-baby-formula')
+              th 
+            tbody
+      .col-md-2
+        h3 Diaper Chart
+
+        table(class="table table-striped table-bordered")
+          thead
+            th(colspan="4") Wet
+              img(class="baby" src="/images/baby.png")
+          tbody
+            tr
+              td
+                button(class="btn btn-default diaper wet-plus")
+                  i(class="glyphicon glyphicon-plus")
+                button(class="btn btn-default diaper wet-minus")
+                  i(class="glyphicon glyphicon-minus")
+                span(id="wet-diaper")
+        table(class="table table-striped table-bordered")
+          thead
+            th(colspan="4") Dirty
+              img(class="baby" src="/images/baby.png")
+            tbody
+            tr
+              td
+                button(class="btn btn-default diaper dirty-plus")
+                  i(class="glyphicon glyphicon-plus")
+                button(class="btn btn-default diaper dirty-minus")
+                  i(class="glyphicon glyphicon-minus")
+                span(id="dirty-diaper")
+                //- img(class="pin" src="/images/safety-pin.png")
+      .col-md-5
+        h3 Sleep Chart
+        form(id="sleep") 
+          table(class="table table-striped table-bordered")
+            thead
+              th Asleep              
+              th Wake
+              th Duration:
+              th
+            tbody
+    .row
+      .col-md-12
+        .padded
+          .well
+            h3
+              label(for="notes") Notes and Milestones
+          textarea(type="text" class="form-control" id="notes")
+          button(class="btn btn-default" id="notes-btn") Update Notes
+ 
+
+    
+    
+    
+
+
+
+
+
+
