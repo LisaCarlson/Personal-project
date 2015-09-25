@@ -1,10 +1,6 @@
 $(document).ready(function() {
-  var dateString = "Today's date is: ";
-  var newDate = new Date();
-  dateString += (newDate.getMonth() + 1) + "-";
-  dateString += newDate.getDate() + "-";
-  dateString += newDate.getFullYear();
-  console.log(dateString);
+
+var date = $('body').attr('data-date');
 
   populateFeedings();
   populateSleeps();
@@ -142,7 +138,7 @@ $(document).ready(function() {
 
   function updateNotes() {
     var noteId = $('#notes').attr('data-id');
-    var params = {'notes': $('#notes').val()}
+    var params = {'notes': $('#notes').val(), 'date': date}
     var type = 'POST';
     var url = '/users/newnotes';
     if (noteId) {
@@ -240,7 +236,7 @@ $(document).ready(function() {
     var time = row.find('.time input').val();
     var minutes = row.find('input.minutes').val();
     var ounces = row.find('input.ounces').val();
-    var feeding = {'time': time, 'minutes': minutes, 'ounces': ounces};
+    var feeding = {'time': time, 'minutes': minutes, 'ounces': ounces, 'date': date};
     var type = 'POST';
     var url = '/users/newfeeding';
 
@@ -286,7 +282,7 @@ $(document).ready(function() {
     var sleepId = elem.attr('data-id');
     var asleep = sleepRow.find('.asleep input').val();
     var awake = sleepRow.find('.awake input').val();
-    var sleep = {'asleep': asleep, 'awake': awake};
+    var sleep = {'asleep': asleep, 'awake': awake, 'date': date};
     var type = 'POST';
     var url = '/users/newsleep';
 
@@ -301,6 +297,7 @@ $(document).ready(function() {
       dataType: 'JSON'
     }).done(function(response) {
       if (response.msg === '') {
+        console.log(response);
         populateSleeps();
       }
       else {
@@ -366,7 +363,7 @@ $(document).ready(function() {
     checkDirtyDiapers(numberDirty);
     checkWetDiapers(numberWet);
 
-    var diapers = {'wet': numberWet, 'dirty': numberDirty};
+    var diapers = {'wet': numberWet, 'dirty': numberDirty, 'date': date};
     var type = 'POST';
     var url = '/users/newdiapers';
 

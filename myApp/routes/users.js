@@ -5,9 +5,24 @@ var feedingCollection = db.get('feedings');
 var diaperCollection = db.get('diapers');
 var sleepCollection = db.get('sleeps');
 var notesCollection = db.get('notes');
+var daysCollection = db.get('days');
 
 /* GET users listing. */
 
+
+router.post('/newdate', function(req, res) {
+  daysCollection.insert(req.body, function(err, result){
+      res.send(
+          (err === null) ? { msg: '' } : { msg: err }
+      );
+  });
+});
+
+router.get('/date', function(req, res) {
+  daysCollection.findOne({}, function (err, docs) {
+    res.json(docs);
+  });
+});
 
 router.get('/notes', function(req, res) {
   notesCollection.findOne({}, function (err, docs) {
@@ -25,7 +40,7 @@ router.post('/newnotes', function(req, res) {
 
 router.put('/notes/:id', function(req, res) {
     var notesID = req.params.id;
-    notesCollection.updateById(notesID, {'notes': req.body.notes}, function(err) { 
+    notesCollection.updateById(notesID, {'notes': req.body.notes, 'date': req.body.date}, function(err) { 
       res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
     });
 });
@@ -46,7 +61,7 @@ router.post('/newdiapers', function(req, res) {
 
 router.put('/diapers/:id', function(req, res) {
     var diaperID = req.params.id;
-    diaperCollection.updateById(diaperID, {'wet':req.body.wet, 'dirty': req.body.dirty}, function(err) {
+    diaperCollection.updateById(diaperID, {'wet':req.body.wet, 'dirty': req.body.dirty, 'date': req.body.date}, function(err) {
         res.send((err === null) ? { msg: '', body: req.body } : { msg:'error: ' + err });
     });
 });
@@ -67,7 +82,7 @@ router.post('/newfeeding', function(req, res) {
 
 router.put('/feedings/:id', function(req, res) {
     var feedingID = req.params.id;
-    feedingCollection.updateById(feedingID, {'time':req.body.time, 'minutes': req.body.minutes, 'ounces': req.body.ounces}, function(err) {
+    feedingCollection.updateById(feedingID, {'time':req.body.time, 'minutes': req.body.minutes, 'ounces': req.body.ounces, 'date': req.body.date}, function(err) {
         res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
     });
 });
@@ -95,7 +110,7 @@ router.post('/newsleep', function(req, res) {
 
 router.put('/sleeps/:id', function(req, res) {
     var sleepsID = req.params.id;
-    sleepCollection.updateById(sleepsID, {'asleep':req.body.asleep, 'awake': req.body.awake}, function(err) {
+    sleepCollection.updateById(sleepsID, {'asleep':req.body.asleep, 'awake': req.body.awake, 'date': req.body.date}, function(err) {
         res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
     });
 });

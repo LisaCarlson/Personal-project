@@ -38,9 +38,6 @@ h3 {
   color: #ff96ca;
 }
 
-/*td {
-  width: 30px;
-}*/
 
 /* App wide classes */
 
@@ -67,9 +64,9 @@ textarea#notes {
   padding: 4px;
 }
 
-/*.diaper {
+.diaper {
   margin-left: 10px;
-}*/
+}
 
 #wet-diaper, #dirty-diaper {
   margin-left: 20px;
