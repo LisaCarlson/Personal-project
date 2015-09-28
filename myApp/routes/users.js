@@ -5,24 +5,9 @@ var feedingCollection = db.get('feedings');
 var diaperCollection = db.get('diapers');
 var sleepCollection = db.get('sleeps');
 var notesCollection = db.get('notes');
-var daysCollection = db.get('days');
 
 /* GET users listing. */
 
-
-router.post('/newdate', function(req, res) {
-  daysCollection.insert(req.body, function(err, result){
-      res.send(
-          (err === null) ? { msg: '' } : { msg: err }
-      );
-  });
-});
-
-router.get('/date', function(req, res) {
-  daysCollection.findOne({}, function (err, docs) {
-    res.json(docs);
-  });
-});
 
 router.get('/notes', function(req, res) {
   notesCollection.findOne({}, function (err, docs) {

@@ -1,3 +1,13 @@
+/*html { 
+  background: url("../images/background.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position:relative;
+}*/
+
+
 body {
   font-size: 16px;
   background-color: #fff2f4;
@@ -87,6 +97,7 @@ textarea#notes {
   background-position: 0 -15px;
   color: #ff96ca;;
 }
+
 .delete {
   width: 100%;
 }
@@ -119,6 +130,16 @@ textarea#notes {
   background-color: #d9534f;
   color: white;
   font-weight: bold;
+}
+
+#date {
+  position: relative;
+  top: 35px;
+  background-color: #ffe3f1;
+  font-size: 20px;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 15px;
 }
 
 
