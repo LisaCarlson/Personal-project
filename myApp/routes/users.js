@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var db = require('monk')('localhost/stat-demo');
+var db = require('monk')('localhost/users');
 var feedingCollection = db.get('feedings');
 var diaperCollection = db.get('diapers');
 var sleepCollection = db.get('sleeps');
@@ -8,7 +8,7 @@ var notesCollection = db.get('notes');
 
 /* GET users listing. */
 
-
+//heroku_k320rbt1:7jojekab8a811g266n9kgo9k7l@ds051843.mongolab.com:51843/heroku_k320rbt1
 router.get('/notes', function(req, res) {
   notesCollection.findOne({}, function (err, docs) {
     res.json(docs);

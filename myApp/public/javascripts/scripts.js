@@ -49,7 +49,7 @@ var date = $('body').attr('data-date');
       tbody.append(tableContent);
     }
     var editRow = '';
-    editRow += '<tr class="info feeding">';
+    editRow += '<tr class="success feeding">';
     editRow += '<td><div id="new-time" class="bfh-timepicker time" data-type="feeding" data-mode="12h"></div></td>';
     editRow += '<td><input id="new-minutes" type="text" class="form-control bfh-number minutes feeding-number" data-type="feeding"></td>'
     editRow += '<td><input id="new-ounces" type="text" class="form-control bfh-number ounces feeding-number" data-type="feeding"></td>';
@@ -75,7 +75,7 @@ var date = $('body').attr('data-date');
       tbody.append(tableContent);
     }
     var editRow = '';
-    editRow += '<tr class="info sleep">';
+    editRow += '<tr class="success sleep">';
     editRow += '<td><div id="new-asleep" class="asleep bfh-timepicker" data-type="sleep" data-mode="12h"></div></td>';
     editRow += '<td><div id="new-awake" class="awake bfh-timepicker" data-type="sleep" data-mode="12h"></div></td>';
     editRow += '<td class="duration"></td>';

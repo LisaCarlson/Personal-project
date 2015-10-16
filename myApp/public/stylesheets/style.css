@@ -10,20 +10,30 @@
 
 body {
   font-size: 16px;
-  background-color: #fff2f4;
-  font-family: 'Muli', sans-serif;
+  /*background-color: #fff2f4;*/
+  background-color: #fef1cb;
+  /*font-family: 'Muli', sans-serif;*/
+  font-family: 'Coming Soon', cursive;
 }
 
-a {
-  color: #ff96ca;
-}
-
-h3 {
+h3, a, span {
   font-weight: bold;
+  font-family: 'Coming Soon', cursive;
+
 }
 
-.container {
+/*.container {
   background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
+}*/
+
+.wrapper {
+  margin-left: 30px;
+  margin-right: 30px;
+  background-color: #fff;
+  padding-left: 20px;
+  padding-right: 20px;
   border-radius: 15px;
   box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
 }
@@ -45,7 +55,8 @@ h3 {
 
 .navbar-default .navbar-nav > li > a{
   font-size: 20px;
-  color: #ff96ca;
+  /*color: #ff96ca;*/
+  color: #e3c670;
 }
 
 
@@ -67,7 +78,7 @@ textarea#notes {
 }
 
 .bfh-timepicker {
-  width: 130px;
+  width: auto;
 }
 
 .table > tbody > tr > td {
@@ -84,11 +95,11 @@ textarea#notes {
 }
 
 .asleep.bfh-timepicker {
-  width: 130px;
+  /*width: 150px;*/
 }
 
 .awake.bfh-timepicker {
-  width: 130px;
+  /*width: 150px;*/
 }
 
 .delete:hover,
@@ -115,8 +126,8 @@ textarea#notes {
   margin-left: 10px;
 }
 
-#feedings {
-  padding-right: 10px;
+/*#feedings {
+  margin-left: 30px;
 }
 #diapers {
   padding: 0px;
@@ -124,7 +135,7 @@ textarea#notes {
 
 #sleeps {
   padding-left: 10px;
-}
+}*/
 
 .modal-header {
   background-color: #d9534f;
@@ -135,12 +146,22 @@ textarea#notes {
 #date {
   position: relative;
   top: 35px;
-  background-color: #ffe3f1;
+  /*background-color: #ffe3f1;*/
+  background-color: #fef1cb;
   font-size: 20px;
   padding: 10px;
   border: 1px solid #e0e0e0;
   border-radius: 15px;
 }
 
+.table>tbody>tr>td {
+  padding: 0px;
+}
 
+.success.feeding > td, .success.sleep > td {
+  padding: 4px;
+}
 
+#diapers > .table>tbody>tr>td {
+  padding: 4px;
+}

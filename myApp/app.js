@@ -6,8 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var monk = require('monk');
 var db = monk('localhost:8000/stat-demo');
-
-
+var User = db.get('users');
 
 require('dotenv').load();
 var routes = require('./routes/index');
@@ -27,11 +26,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.use(function(req,res,next){
-    req.db = db;
-    next();
-});
 app.use('/', routes);
 app.use('/users', users);
 

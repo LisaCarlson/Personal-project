@@ -5,8 +5,14 @@ var router = express.Router();
 // var diaperCollection = db.get('diapers');
 // var sleepCollection = db.get('sleeps');
 // var notesCollection = db.get('notes');
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
 
 /* GET home page. */
+
+router.get('/login', function(req, res, next) {
+  res.render('login.jade');
+});
 
 router.get('/', function(req, res, next) {
   var dateString = "";
